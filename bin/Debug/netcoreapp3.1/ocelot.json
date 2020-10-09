@@ -1,0 +1,89 @@
+
+{
+  //路由配置（16.1版本将ReRoutes换成Routes）
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{controller}/{action}", // 下游（服务提供方）服务路由模板
+      "DownstreamScheme": "http", //下游协议
+      "DownstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //下游Http请求类型
+      //"DownstreamHttpMethod": "Get", //下游Http请求类型？？？？？
+      "UpstreamHttpMethod": [ "Options", "Get", "Post", "Put", "Delete" ], //上游允许的Http请求方式
+      "UseServiceDiscovery": true, //启用服务发现，若Ocelot集合Consul必须配置此项
+      "UpstreamPathTemplate": "/Server1/{controller}/{url}", //Hero：上游路径模版
+      "ServiceName": "Server1", //服务名称
+      /*
+       负载均衡算法，总共三种类型。
+        LeastConnection：最小链接，将请求发往最空闲的那个服务器
+        RoundRobin：轮询，轮流发送
+        NoLoadBalance：无负载均衡，总是发往第一个请求或者是服务发现
+        */
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+      //,
+      //"QoSOptions": {
+      //  "ExceptionsAllowedBeforeBreaking": 3, //允许多少个异常请求
+      //  "DurationOfBreak": 10000, // 熔断的时间，单位为ms
+      //  "TimeoutValue": 10000 //如果下游请求的处理时间超过多少则自如将请求设置为超时 默认90秒
+      //}
+      //"DownstreamHttpVersion": "",
+      //"AddHeadersToRequest": {},
+      //"AddClaimsToRequest": {},
+      //"RouteClaimsRequirement": {},
+      //"AddQueriesToRequest": {},
+      //"RequestIdKey": "",
+      //"FileCacheOptions": {
+      //  "TtlSeconds": 0,
+      //  "Region": ""
+      //},
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "",
+      //  "AllowedScopes": []
+      //},
+      //"HttpHandlerOptions": {
+      //  "AllowAutoRedirect": true,
+      //  "UseCookieContainer": true,
+      //  "UseTracing": true,
+      //  "MaxConnectionsPerServer": 100 //这控制内部HttpClient将打开多少连接。这可以在路线或全球一级设置。
+      //},
+      //"DangerousAcceptAnyServerCertificateValidator": false,
+      //"路由限流配置"
+      //"RateLimitOptions": {
+      //  "ClientWhitelist": [], //白名单
+      //  "EnableRateLimiting": false, //是否启用限流
+      //  "Period": "5s", //统计时间段：1s，5m，1h，1d
+      //  "PeriodTimespan": 10, //客户端可以重试时间，单位秒
+      //  "Limit": 3 //在统计时间段内允许的最大请求数量
+      //},
+      //"Polly配置"
+      //"QoSOptions": {
+      //  "ExceptionsAllowedBeforeBreaking": 3, //允许多少个异常请求
+      //  "DurationOfBreak": 5, //熔断的时间，单位为秒
+      //  "TimeoutValue": 6000 //如果下游请求的处理时间超过多少则自动将请求设置为超时
+      //},
+
+      //"Priority": 0 //优先权顺序
+    }
+  ],
+
+  //全局配置
+  "GlobalConfiguration": {
+    //"BaseUrl": "http://127.0.0.1:6299", //网关对外地址
+    "RequestIdKey": "OcRequestId",
+    "ReRouteIsCaseSensitive": false, //是否区分路由字母大小写
+    "ServiceDiscoveryProvider": { //服务发现提供者，配置Consul地址
+      "Host": "122.51.103.215", //Consul主机名称
+      "Port": 8500, //Consul端口号
+      "Type": "Consul" //必须指定Consul服务发现类型
+    }
+    //,
+    //"限流相关配置"
+    //"RateLimitOptions": {
+    //  "ClientIdHeader": "ClientId",
+    //  "QuotaExceededMessage": "RateLimit SCscHero", //限流响应提示
+    //  "RateLimitCounterPrefix": "ocelot",
+    //  "DisableRateLimitHeaders": false,
+    //  "HttpStatusCode": 429
+    //}
+  }
+}
