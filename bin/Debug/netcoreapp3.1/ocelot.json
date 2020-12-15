@@ -2,7 +2,7 @@
   //路由配置（16.1版本将ReRoutes换成Routes）
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/{url}", //"/{controller}/{action}", // 下游（服务提供方）服务路由模板
+      "DownstreamPathTemplate": "/{url}", //"/{controller}/{action}", // 下游（服务提供方）服务路由模板
       "DownstreamScheme": "http", //下游协议
       //"DownstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //下游Http请求类型(设置后会造成接口不能正确访问)
       // "DownstreamHttpMethod": "Get", //下游Http请求类型？？？？？

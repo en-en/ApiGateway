@@ -40,7 +40,27 @@ namespace ApiGateway
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("ApiGateway", new OpenApiInfo { Title = "网关服务", Version = "V1" });
+                options.SwaggerDoc(Configuration["Swagger:DefineSwaggerName"], new OpenApiInfo { Title = "网关服务", Version = "V1" });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "Please enter into field the word 'Bearer' followed by a space and the JWT value",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "bearer"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+             {
+            { new OpenApiSecurityScheme
+            {
+            Reference = new OpenApiReference()
+            {
+               Id = "Bearer",
+            Type = ReferenceType.SecurityScheme
+            }
+            }, Array.Empty<string>() }
+});
             }
             );
             services.AddOcelot().AddConsul();//.AddPolly();
