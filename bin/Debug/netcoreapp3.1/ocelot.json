@@ -1,16 +1,15 @@
-
 {
   //路由配置（16.1版本将ReRoutes换成Routes）
-  "Routes": [
+  "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/{controller}/{action}", // 下游（服务提供方）服务路由模板
+      "DownstreamPathTemplate": "/api/{url}", //"/{controller}/{action}", // 下游（服务提供方）服务路由模板
       "DownstreamScheme": "http", //下游协议
-      "DownstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //下游Http请求类型
-      //"DownstreamHttpMethod": "Get", //下游Http请求类型？？？？？
+      //"DownstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //下游Http请求类型(设置后会造成接口不能正确访问)
+      // "DownstreamHttpMethod": "Get", //下游Http请求类型？？？？？
       "UpstreamHttpMethod": [ "Options", "Get", "Post", "Put", "Delete" ], //上游允许的Http请求方式
+      "UpstreamPathTemplate": "/{url}", //Hero：上游路径模版
       "UseServiceDiscovery": true, //启用服务发现，若Ocelot集合Consul必须配置此项
-      "UpstreamPathTemplate": "/Server1/{controller}/{url}", //Hero：上游路径模版
-      "ServiceName": "Server1", //服务名称
+      "ServiceName": "UserService", //服务名称
       /*
        负载均衡算法，总共三种类型。
         LeastConnection：最小链接，将请求发往最空闲的那个服务器
@@ -18,8 +17,8 @@
         NoLoadBalance：无负载均衡，总是发往第一个请求或者是服务发现
         */
       "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+        "Type": "RoundRobin"
+      },
       //,
       //"QoSOptions": {
       //  "ExceptionsAllowedBeforeBreaking": 3, //允许多少个异常请求
@@ -36,10 +35,11 @@
       //  "TtlSeconds": 0,
       //  "Region": ""
       //},
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "",
-      //  "AllowedScopes": []
-      //},
+      // 权限配置
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "UserServiceGateway",
+        "AllowedScopes": [ "UserServiceApi" ]
+      }
       //"HttpHandlerOptions": {
       //  "AllowAutoRedirect": true,
       //  "UseCookieContainer": true,
@@ -64,15 +64,25 @@
 
       //"Priority": 0 //优先权顺序
     }
+    //,
+    //{
+    //  "DownstreamPathTemplate": "/UserService.Webapi/UserService.Webapi.xml",
+    //  "DownstreamScheme": "http",
+    //  "ServiceName": "UserService",
+    //  "LoadBalancer": "RoundRobin",
+    //  "UseServiceDiscovery": true,
+    //  "UpstreamPathTemplate": "/UserService.Webapi/UserService.Webapi.xml",
+    //  "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    //}
   ],
 
   //全局配置
   "GlobalConfiguration": {
-    //"BaseUrl": "http://127.0.0.1:6299", //网关对外地址
-    "RequestIdKey": "OcRequestId",
+    "BaseUrl": "http://47.113.204.75:9004", //网关对外地址
+    //"RequestIdKey": "OcRequestId",
     "ReRouteIsCaseSensitive": false, //是否区分路由字母大小写
     "ServiceDiscoveryProvider": { //服务发现提供者，配置Consul地址
-      "Host": "122.51.103.215", //Consul主机名称
+      "Host": "47.113.204.75", //Consul主机名称
       "Port": 8500, //Consul端口号
       "Type": "Consul" //必须指定Consul服务发现类型
     }

@@ -23,7 +23,7 @@ namespace ApiGateway
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(c=>
+            .ConfigureAppConfiguration(c =>
             {
                 c.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
             }
@@ -43,24 +43,41 @@ namespace ApiGateway
                     //});
                 });
 
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args).UseUrls("http://*:9000")
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config
-                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddJsonFile("ocelot.json")
-                .AddEnvironmentVariables();
-            })
-            .ConfigureServices(services =>
-            {
-                services.AddOcelot().AddConsul();
-            })
-            .Configure(app =>
-            {
-                app.UseOcelot().Wait();
-            });
-          
+        //    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //WebHost.CreateDefaultBuilder(args)
+        // .UseUrls("http://*:9000")
+        // .ConfigureAppConfiguration((hostingContext, config) =>
+        // {
+        //     config
+        //             .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+        //             .AddJsonFile("ocelot.json")
+        //             .AddEnvironmentVariables();
+        // })
+        //.ConfigureServices(services =>
+        //{
+        //    services.AddOcelot()
+        //        .AddConsul();
+        //})
+        //.Configure(app =>
+        //{
+        //    app.UseOcelot().Wait();
+        //});
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //    .ConfigureAppConfiguration((hostingContext, config) =>
+        //    {
+        //        config
+        //        .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+        //        .AddJsonFile("ocelot.json")
+        //        .AddEnvironmentVariables();
+        //    })
+        //    .ConfigureServices(services =>
+        //    {
+        //        services.AddOcelot().AddConsul();
+        //    })
+        //    .Configure(app =>
+        //    {
+        //        app.UseOcelot().Wait();
+        //    });
     }
 }
