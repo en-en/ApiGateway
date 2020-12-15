@@ -64,16 +64,16 @@
 
       //"Priority": 0 //优先权顺序
     }
-    //,
-    //{
-    //  "DownstreamPathTemplate": "/UserService.Webapi/UserService.Webapi.xml",
-    //  "DownstreamScheme": "http",
-    //  "ServiceName": "UserService",
-    //  "LoadBalancer": "RoundRobin",
-    //  "UseServiceDiscovery": true,
-    //  "UpstreamPathTemplate": "/UserService.Webapi/UserService.Webapi.xml",
-    //  "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
-    //}
+    ,
+    {
+      "DownstreamPathTemplate": "/UserService/swagger.json",
+      "DownstreamScheme": "http",
+      "ServiceName": "UserService",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
+      "UpstreamPathTemplate": "/UserService/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    }
   ],
 
   //全局配置

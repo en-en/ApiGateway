@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -39,7 +40,7 @@ namespace ApiGateway
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("ApiGateway", new Swashbuckle.AspNetCore.Swagger.Info { Title = "网关服务", Version = "V1" });
+                options.SwaggerDoc("ApiGateway", new OpenApiInfo { Title = "网关服务", Version = "V1" });
             }
             );
             services.AddOcelot().AddConsul();//.AddPolly();
