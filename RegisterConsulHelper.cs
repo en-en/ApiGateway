@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Consul;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace ApiGateway
 {
     public static class RegisterConsulHelper
     {
-        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IApplicationLifetime lifetime,
+        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime,
             ServiceEntity entity)
         {
             //请求注册的consul地址
