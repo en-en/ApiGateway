@@ -1,0 +1,26 @@
+node {
+    stage("checkout")
+    {
+        
+       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '8049fc28-8f8a-4bb4-a967-a2badc6eec4e', url: 'https://github.com/en-en/ApiGateway.git']]])
+    }
+    
+      stage('Build') {
+          
+          echo "build"
+         
+        }
+        
+         stage('deplay') {
+          
+          echo "deplay......"
+         
+        }
+             stage('test') {
+          
+          echo "test......"
+         
+        }
+   
+    
+}
