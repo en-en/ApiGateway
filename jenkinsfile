@@ -8,7 +8,7 @@ node {
       stage('Build') {
           
           echo "build"
-         
+          echo "build"
         }
         
          stage('deplay') {
