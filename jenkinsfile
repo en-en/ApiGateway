@@ -1,4 +1,4 @@
-node {
+node('47.113.204.75-slave1') {
     stage("checkout")
     {
         
