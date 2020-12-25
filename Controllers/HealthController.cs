@@ -25,7 +25,7 @@ namespace ApiGateway.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            Console.WriteLine($"This is HealthController  {this._configuration["Service:Port"]} Invoke");
+            Console.WriteLine($" This is HealthController  {this._configuration["Service:Port"]} Invoke");
 
             return Ok();
         }
